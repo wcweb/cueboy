@@ -1,0 +1,11 @@
+.svn
+.project
+.settings
+.DS_Store
+.vagrant
+/test/
+**/.svn/
+*.log
+*.errors
+Gemfile.lock
+tags
