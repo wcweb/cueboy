@@ -1,0 +1,80 @@
+<project name="Plugin-Cueboy" basedir="../" default="buildAS">
+
+	<target name="buildJS">
+		<concat destfile="cueboy.js">
+			<fileset dir="src/js" includes="*.js" />
+		</concat>
+		<java jar="build/yuicompressor.jar" fork="true">
+			<arg line="'cueboy.js'" />
+			<arg line="-o 'cueboy.js'" />
+		</java>
+		<exec executable="python">
+			<arg file="build/encode-images.py" />
+			<arg file="cueboy.js" />
+			<arg file="assets/" />
+		</exec>
+		<echo message="Compiled JS plugin." />
+	</target>
+	<target name="buildAS" depends="buildJS">
+		<exec executable="../../../developer/SDKs/flex_sdk_4.6/bin/mxmlc" dir="${basedir}">
+			<arg line="src/as/us/wcweb/Cueboy/Cueboy.as" />
+			<arg line="-o bin/cueboy.swf" />
+			<arg line="-sp src/as" />
+			<arg line="-library-path+=lib" />
+			<arg line="-load-externs=lib/jwplayer-5-classes.xml" />
+			<arg line="-static-link-runtime-shared-libraries=true" />
+			<arg line="-use-network=false" />
+			<arg line="-optimize=true" />
+			<arg line="-incremental=false" />
+		</exec>
+		<echo message="Compiled SWF plugin." />
+	</target>
+	<target name="buildtestOthersName">
+		<exec executable="../../../developer/SDKs/flex_sdk_4.6/bin/mxmlc" dir="${basedir}">
+			<arg line="src/as/us/wcweb/Cueboy/Cueboysw.as" />
+			<!--<arg line="-o ../../avaUI/application/static/swf/cueboy.swf" />-->
+			<arg line="-o test/Cueboysw.swf" />
+			<arg line="-sp src/as" />
+			<arg line="-library-path+=lib" />
+			<arg line="-load-externs=lib/jwplayer-5-classes.xml" />
+			<arg line="-static-link-runtime-shared-libraries=true" />
+			<arg line="-use-network=false" />
+			<arg line="-optimize=true" />
+			<arg line="-incremental=false" />
+		</exec>
+		<echo message="Compiled SWF plugin." />
+	</target>
+	
+	<target name="buildtest">
+		<exec executable="../../../developer/SDKs/flex_sdk_4.6/bin/mxmlc" dir="${basedir}">
+			<arg line="src/as/us/wcweb/Cueboy/Cueboy.as" />
+			<!--<arg line="-o ../../avaUI/application/static/swf/cueboy.swf" />-->
+			<arg line="-o test/Cueboy.swf" />
+			<arg line="-sp src/as" />
+			<arg line="-library-path+=lib" />
+			<arg line="-load-externs=lib/jwplayer-5-classes.xml" />
+			<arg line="-static-link-runtime-shared-libraries=true" />
+			<arg line="-use-network=false" />
+			<arg line="-optimize=true" />
+			<arg line="-incremental=false" />
+		</exec>
+		<echo message="Compiled SWF plugin." />
+	</target>
+	
+	<target name="buildSWtest">
+		<exec executable="../../../developer/SDKs/flex_sdk_4.6/bin/mxmlc" dir="${basedir}">
+			<arg line="src/as/us/wcweb/Cueboy/Cueboysw.as" />
+			<!--<arg line="-o ../../avaUI/application/static/swf/cueboy.swf" />-->
+			<arg line="-o test/cueboysw.swf" />
+			<arg line="-sp src/as" />
+			<arg line="-library-path+=lib" />
+			<arg line="-load-externs=lib/jwplayer-5-classes.xml" />
+			<arg line="-static-link-runtime-shared-libraries=true" />
+			<arg line="-use-network=false" />
+			<arg line="-optimize=true" />
+			<arg line="-incremental=false" />
+		</exec>
+		<echo message="Compiled SWF plugin." />
+	</target>
+	
+</project>
