@@ -32,6 +32,7 @@ package com.bit101.components {
 
 	public class Panel extends Component {
 		protected var _mask : Sprite;
+		protected var _alpha: Number=1;
 		protected var _background : Sprite;
 		protected var _color : int = -1;
 		protected var _shadow : Boolean = true;
@@ -108,7 +109,7 @@ package com.bit101.components {
 			if (_color == -1) {
 				_background.graphics.beginFill(Style.PANEL);
 			} else {
-				_background.graphics.beginFill(_color);
+				_background.graphics.beginFill(_color, _alpha);
 			}
 			_background.graphics.drawRect(0, 0, _width, _height);
 			_background.graphics.endFill();
@@ -168,6 +169,16 @@ package com.bit101.components {
 		public function get color() : int {
 			return _color;
 		}
+		
+		public function set alphaFill(c : Number) : void {
+			_alpha = c;
+			invalidate();
+		}
+
+		public function get alphaFill() : Number {
+			return _alpha;
+		}
+		
 
 		/**
 		 * Sets / gets the size of the grid.

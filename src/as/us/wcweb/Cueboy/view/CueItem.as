@@ -138,6 +138,7 @@ package us.wcweb.Cueboy.view {
 			_titleField.width = width - 2;
 			_titleField.height = 20;
 			_titleField.y = 25;
+			_titleField.multiline = true;
 			_titleField.wordWrap = true;
 			_titleField.autoSize = "center";
 			_titleField.defaultTextFormat = _format2;

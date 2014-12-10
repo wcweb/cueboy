@@ -46,7 +46,7 @@ class CueboyTest < Sinatra::Base
     "<rss version=\"2.0\" xmlns:media=\"http://search.yahoo.com/mrss/\">
     	<channel>
     		<item>
-    			<title>Big B¸÷ÖÖÎÊ</title>
+    			<title>Big BÂ¸Ã·Ã–Ã–ÃŽÃŠ</title>
     			<link>http://content.bitsontherun.com/previews/ntPYsD4L-ALJ3XQCI</link>
     			<seekTime>10000</seekTime>
     		</item>
@@ -68,7 +68,7 @@ class CueboyTest < Sinatra::Base
     		<item>
     			<title>Elephants Dream3</title>
     			<link>http://content.bitsontherun.com/previews/LJSVMnCF-ALJ3XQCI</link>
-    			<seekTime>50000</seekTime>
+    			<seekTime>50010</seekTime>
     		</item>
     		<item>
     			<title>Sintel1</title>
@@ -83,27 +83,29 @@ class CueboyTest < Sinatra::Base
     		<item>
     			<title>Elephants Dream3</title>
     			<link>http://content.bitsontherun.com/previews/LJSVMnCF-ALJ3XQCI</link>
-    			<seekTime>50000</seekTime>
+    			<seekTime>500000</seekTime>
     		</item>
     		<item>
-    			<title>Sintel1</title>
+    			<title>Sintel12</title>
     			<link>http://content.bitsontherun.com/previews/r3ABWwdO-ALJ3XQCI</link>
-    			<seekTime>100000</seekTime>
+    			<seekTime>103300</seekTime>
     		</item>
     		<item>
-    			<title>Big Buck Bunny2</title>
+    			<title>Big Buck Bunny21</title>
     			<link>http://content.bitsontherun.com/previews/ntPYsD4L-ALJ3XQCI</link>
-    			<seekTime>10000</seekTime>
+    			<seekTime>1020000</seekTime>
     		</item>
     		<item>
     			<title>Elephants Dream3</title>
     			<link>http://content.bitsontherun.com/previews/LJSVMnCF-ALJ3XQCI</link>
-    			<seekTime>50000</seekTime>
+    			<seekTime>500000</seekTime>
     		</item>
     		<item>
-    			<title>Sintel1</title>
+    			<title>Sintel13,Sintel13Sintel13Sintel13Sintel13Sintel13Sintel13
+          Sintel13Sintel13Sintel13Sintel13
+          Sintel13Sintel13Sintel13Sintel13Sintel13</title>
     			<link>http://content.bitsontherun.com/previews/r3ABWwdO-ALJ3XQCI</link>
-    			<seekTime>100000</seekTime>
+    			<seekTime>1000100</seekTime>
     		</item>
     	</channel>
     </rss>

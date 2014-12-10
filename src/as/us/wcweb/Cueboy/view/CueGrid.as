@@ -1,4 +1,6 @@
 package us.wcweb.Cueboy.view {
+	import us.wcweb.Cueboy.view.components.DarkCueListItem;
+	import us.wcweb.Cueboy.view.components.DarkGallery;
 	import com.bit101.components.Style;
 	import com.bit101.components.Component;
 	import com.bit101.components.List;
@@ -34,7 +36,7 @@ package us.wcweb.Cueboy.view {
 		public var count : Number;
 		public var nextBtn : Sprite;
 		public var prewBtn : Sprite;
-		private var list : List;
+		private var list : DarkGallery;
 		// private var _panel:Panel;
 		private var _container : Sprite;
 		public var panel : Panel;
@@ -49,13 +51,16 @@ package us.wcweb.Cueboy.view {
 			// _panel = new Panel(this.parent);
 			panel = parentPanel;
 			Style.setStyle("dark");
-			list = new List(panel, 10, 10);
+			list = new DarkGallery(panel, 0, 0);
 			
-			list.listItemClass = CueListItem;
-			list.listItemHeight =35;
+			list.listItemClass = DarkCueListItem;
+			list.listItemWidth =200;
 			list.defaultColor = 0x242424;
 			
 			list.addEventListener(Event.SELECT, onSelect);
+			
+			
+			
 			MonsterDebugger.initialize(this);
 			MonsterDebugger.log(this, "init cueGrid");
 			MonsterDebugger.trace(this, list);
@@ -93,6 +98,12 @@ package us.wcweb.Cueboy.view {
 		public function set dimensions(dim : Array) : void {
 			_dimensions = dim;
 		}
+		
+		public function setSize(w:Number, h: Number):void{
+			list.setSize(w,h);
+			list.updateFrame();
+		}
+		
 
 		// Command Event
 		public function deleteItem(item : CuePointsItem) : void {
@@ -149,11 +160,13 @@ package us.wcweb.Cueboy.view {
 				// thumb.addEventListener(CueItemEvent.CLICK_ITEM, _clickHandler);
 				// thumb.clickSignal.add(_clickHandler);
 			}
+			
+			
 
 			// TODO dispath resize event
 			dispatchEvent(new ViewLayerEvent(ViewLayerEvent.UPDATE_LAYER, this));
 			// Logger.log('grid have parse finish with ' + cuePointsItems);
-				MonsterDebugger.log(this, list.items);
+				MonsterDebugger.log(this, list.items, list.items.length,"fuckckckckckkckc");
 		}
 
 		// place right position
@@ -168,11 +181,12 @@ package us.wcweb.Cueboy.view {
 
 		public function placeGrid(vertical : Boolean = true, scale : Boolean = false) : void {
 			if (_dimensions.length > 2) {
-				list.setSize(panel.width * (1-0.6180339887), panel.height);
-				list.x = 0;
-				list.y = 0;
+//				list.setSize(panel.width * (1-0.6180339887), panel.height);
+				
+				list.setSize(panel.width, panel.height*.8);
 			}
-
+			list.setSize(panel.width, panel.height*.8);
+			list.updateFrame();
 			// _col = 0;
 			// _row = 0;
 			//

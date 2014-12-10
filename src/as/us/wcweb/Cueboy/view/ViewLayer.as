@@ -149,27 +149,9 @@ package us.wcweb.Cueboy.view {
 			_back.addEventListener(MouseEvent.CLICK, _backHandler);
 			_container.addChild(_back);
 			Style.setStyle("dark");
-			panel = new Panel(_container);
-			panel.color = 0x242424;
-
-			closeBtn = new MyPushButton(panel, 0, 0, "关闭");
-
-			closeBtn.addEventListener(MouseEvent.CLICK, _backHandler);
 
 			new Animations(_container).fade(0, 0.2);
 			// _container.visible = false;
-
-			grid = new CueGrid(panel);
-
-			grid.x = 20;
-			grid.y = 40;
-			grid.dimensions = _dimensions;
-
-			// grid.addEventListener(CueItemEvent.CLICK_ITEM_IN_VIEW, _clickHandler);
-			grid.addEventListener(CueItemEvent.CLICK_ITEM, _clickHandler);
-			grid.addEventListener(ViewLayerEvent.UPDATE_LAYER, _updateLayerHandler);
-			// _container.addChild(grid);
-			// addChild(grid);
 
 			// _mask = new Sprite();
 			// grid.mask = _mask;
@@ -211,6 +193,25 @@ package us.wcweb.Cueboy.view {
 			introduction.htmlText = config.introduction;
 			_container.addChild(introduction);
 
+			panel = new Panel(_container, 0, introduction.y + introduction.height);
+			panel.color = 0x242424;
+			panel.alphaFill = 0.1;
+
+			grid = new CueGrid(panel);
+			grid.y = 0;
+			grid.dimensions = _dimensions;
+			grid.setSize(width, 200);
+
+			closeBtn = new MyPushButton(panel, 0, 0, "关闭");
+
+			closeBtn.addEventListener(MouseEvent.CLICK, _backHandler);
+
+			// grid.addEventListener(CueItemEvent.CLICK_ITEM_IN_VIEW, _clickHandler);
+			grid.addEventListener(CueItemEvent.CLICK_ITEM, _clickHandler);
+			grid.addEventListener(ViewLayerEvent.UPDATE_LAYER, _updateLayerHandler);
+			// _container.addChild(grid);
+			// addChild(grid);
+
 			// introduction = new Text(panel, 100, 0);
 			// introduction.textField.defaultTextFormat = new TextFormat('Arial', 16, 0x000000);
 			// introduction.html = true;
@@ -227,10 +228,6 @@ package us.wcweb.Cueboy.view {
 				repeatCheckBox.label = '点击开启循环时间段';
 			}
 			repeatCheckBox.addEventListener(MouseEvent.CLICK, _repeatCheckHandler);
-			// _container.addChild(repeatCheckBox);
-			// _win.addChild(repeatCheckBox);
-			// Logger.log("_repeatCueBox"+repeatCheckBox);
-			// Logger.log("_repeatCueBox.selected = "+repeatCheckBox.selected);
 
 			// Add the grid for thumbs
 			buttonMode = true;
@@ -351,17 +348,19 @@ package us.wcweb.Cueboy.view {
 
 		private function _resizeLayerHandler(e : ViewLayerEvent) : void {
 			_dimensions = e.data as Array;
-			Logger.log("resize in viewlayer _dimensions"+_dimensions);
-			MonsterDebugger.log("resize in viewlayer _dimensions",_dimensions);
+			Logger.log("resize in viewlayer _dimensions" + _dimensions);
+			MonsterDebugger.log("resize in viewlayer _dimensions", _dimensions);
 			var	width : Number = _dimensions[2],
 			height : Number = _dimensions[3];
 
 			_back.width = width;
 			_back.height = height;
 
-			grid.x = 20;
-			grid.y = 40;
-			grid.dimensions = _dimensions;
+			var widthM : Number = width * .9;
+			var heightM : Number = height * .9;
+
+			var posX : Number = (width - widthM) / 2;
+			var posY : Number = (height - heightM) / 2;
 
 			// _mask.graphics.clear();
 			// _mask.graphics.beginFill(0, 1);
@@ -373,48 +372,61 @@ package us.wcweb.Cueboy.view {
 			// panel.y = _heading.y + 5;
 			// repeatCheckBox.x = _heading.x + _heading.width + 20;
 			// repeatCheckBox.y = _heading.y+10;
-			panel.setSize(width * .8, height * .8);
-			panel.x = (width - panel.width) / 2;
-			panel.y = (height - panel.height) / 2;
 
+			// title.x = panel.x + panel.width * (1 - .618) + 20;
+			title.x = posX + 20;
+			title.y = posY + 10;
+			// title.width = panel.width * .618 - 25;
+			title.width = widthM - 25;
+
+			// introduction.x = panel.x + panel.width * (1 - .618) + 20;
+			introduction.x = posX + 20
+			introduction.y = title.y + title.height + 15;
+
+			// introduction.width = panel.width * .618 - 25;
+			introduction.width = widthM - 25;
+			introduction.height = heightM * .3;
+
+			introduction.scrollH = int(heightM * .3);
+
+			grid.dimensions = _dimensions;
+			panel.setSize(widthM, height * .4);
+			panel.x = posX;
 			if (_fullScreenStatue) {
 				grid.fullScreenResize();
 				// panel.scaleX = 1.5;
 				// panel.scaleY = 1.5;
 
-				title.setTextFormat(new TextFormat('Arial', 26, 0x777b10));
+				title.setTextFormat(new TextFormat('Arial', 30, 0x777b10));
 				// scale(title, 1.5);
 				// introduction.y = title.y + title.height + 30;
 				// scale(introduction, 1.5);
+				introduction.y = title.y + title.height + 15;
 				introduction.setTextFormat(new TextFormat('Arial', 22, 0xcfcfcf));
+
+				panel.y = (heightM- panel.height) / 2 + 10;
 			} else {
 				grid.resize();
 				// scale(title);
 				// introduction.y = title.y + title.height + 30;
 				title.setTextFormat(new TextFormat('Arial', 16, 0x777b10));
+				introduction.y = title.y + title.height + 15;
 				introduction.setTextFormat(new TextFormat('Arial', 12, 0xcfcfcf));
 				// scale(introduction);
 				// panel.scaleX = 1;
 				// panel.scaleX = 1;
+
+				panel.y = introduction.y + introduction.height + 10;
 			}
 
-			title.x = panel.x + panel.width * (1 - .618) + 20;
-			title.y = panel.y + 10;
-			title.width = panel.width * .618 - 25;
+			grid.setSize(panel.width, panel.height * .8);
 
-			introduction.x = panel.x + panel.width * (1 - .618) + 20;
-			introduction.y = panel.y + 50;
-			introduction.width = panel.width * .618 - 25;
-			introduction.height = 150;
-			introduction.scrollH = int(panel.height * (1 - .618));
+			closeBtn.x = panel.width - closeBtn.width - 10;
+			closeBtn.y = panel.height - closeBtn.height - 10;
 
-			var posX : Number = panel.width * .95,
-			posY : Number = panel.height * .9;
-
-			closeBtn.x = posX - closeBtn.width - 10;
-			closeBtn.y = posY;
-			repeatCheckBox.x =  panel.x + panel.width * (1 - .618) + 20;
-			repeatCheckBox.y = posY - repeatCheckBox.height - 10;
+			// repeatCheckBox.x =  panel.x + panel.width * (1 - .618) + 20;
+			repeatCheckBox.x = 10;
+			repeatCheckBox.y = panel.height - closeBtn.height - 10;
 
 			// grid.mask = _mask;s
 			// if (_fullScreenStatue) {
